@@ -1,6 +1,6 @@
 from random import randint
 import pandas as pd
-from pandas.compat import u
+
 
 #CONSTANTS
 CSVFILE = "questions.csv"
@@ -31,23 +31,25 @@ def generateRandoms(questionFile):
 def createQuestionList(questionFile, randomList):
   questions_list = []
   for random in randomList:
-    question = questionFile.iloc[random, 1]
-    answer = questionFile.iloc[random, 2]
+    question = questionFile.iloc[random, 1].encode().decode("unicode-escape") + "\n"
+    answer = questionFile.iloc[random, 2].encode().decode('unicode-escape') + "\n"
     temp = [question, answer]
     questions_list.append(temp)
   return questions_list
 
 def displayQuestions(questionList):
   print("\n\n\n\n\nQuestions\n")
-  for question in questionList:
-    print(question[0])
+  for question in range(len(questionList)):
+    print(question+1,end=". ")
+    print(questionList[question][0])
   print("\n\n\n")
 
 def displayAnswers(questionList):
   input("Press any key to display answers")
   print("\n\nAnswers\n")
-  for question in questionList:
-    print(question[1])
+  for question in range(len(questionList)):
+    print(question+1,end=". ")
+    print(questionList[question][1])
 
 def topicSelection(topicList):
   print("Please Enter the Topic Tiles you are interested in from this list one by one")
