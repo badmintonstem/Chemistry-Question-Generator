@@ -1,5 +1,6 @@
 from random import randint
 import pandas as pd
+from pandas.compat import u
 
 #CONSTANTS
 CSVFILE = "questions.csv"
