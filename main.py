@@ -8,7 +8,7 @@ NUM_QUESTIONS = 5
 
 #Functions
 def importQuestions(csvFile):
-  questions = pd.read_csv(csvFile)
+  questions = pd.read_csv(csvFile, encoding="unicode-escape")
   return questions
 
 def findTopics(questionFile):
@@ -16,7 +16,10 @@ def findTopics(questionFile):
   return topics
 
 def defineSubset(questions, topicList):
-  subset = questions[questions["Topic"].isin(topicList)]
+  if len(topicList) == 0:
+    subset = questions
+  else:
+    subset = questions[questions["Topic"].isin(topicList)]
   return subset
 
 def generateRandoms(questionFile):
@@ -31,8 +34,8 @@ def generateRandoms(questionFile):
 def createQuestionList(questionFile, randomList):
   questions_list = []
   for random in randomList:
-    question = questionFile.iloc[random, 1].encode().decode("unicode-escape") + "\n"
-    answer = questionFile.iloc[random, 2].encode().decode('unicode-escape') + "\n"
+    question = questionFile.iloc[random, 1] + "\n"
+    answer = questionFile.iloc[random, 2] + "\n"
     temp = [question, answer]
     questions_list.append(temp)
   return questions_list
